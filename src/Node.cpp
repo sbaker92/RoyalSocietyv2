@@ -1,6 +1,6 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
-#include "C:\Users\BassPanda\My Documents\CSE 274\RoyalSocietyv2\vc10\Node.h"
+#include "Node.h"
 #include "cinder/Color.h"
 
 using namespace ci;
@@ -27,16 +27,8 @@ Node::Node(uint8_t* pixels, int centerx, int centery, int radius, int thickness,
 void Node::drawNode(int textureSize, uint8_t* pixels){
 	if (rad <= 0)
 		return;
-	for(int m = y - rad; m <= y + rad; m++){
-		for(int n = x - rad; n <= x + rad; n++){
-			int dist = (int)sqrt((double)((n-x)*(n-x) + (m-y)*(m-y)));
-			if (dist <= rad && dist >= rad-thick){
-				pixels[3*(x + y * textureSize)] = col.r;
-				pixels[3*(x + y * textureSize) + 1] = col.g;
-				pixels[3*(x + y * textureSize) + 2] = col.b;
-			}
-		}
-	}
+	// This is a lazy way to do the circles
+	gl::drawSolidCircle(Vec2f(x,y), rad);
 }
 
 //Super awesome insertAfter method.
