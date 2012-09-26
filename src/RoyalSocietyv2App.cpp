@@ -10,7 +10,7 @@ hopefully requirements C and E (but I can't be too sure).
 #include "boost/date_time/posix_time/posix_time.hpp"
 //Had to include the full filepath for Node.h to keep
 //the errors away. Probably won't be the same for everyone.
-#include "C:\Users\BassPanda\My Documents\CSE 274\RoyalSocietyv2\vc10\Node.h"
+#include "Node.h"
 #include "cinder/Text.h"
 #include "cinder/Color.h"
 
@@ -129,12 +129,16 @@ void RoyalSocietyv2App::mouseDown( MouseEvent event ){
 		//drawCircle(dataArray, x, y, 30, 25, Color8u(0, 50, 200));
 	}
 	if(event.isRight()){
-		int x = mousePos.x;
-		int y = mousePos.y;
+
+		//Your mousePos variable was never set so I changed mousePos to event.getX/Y
+		//So a right click gives you a new circle at the mouse position
+		int x = event.getX();
+		int y = event.getY();
 
 		Node* node = new Node(dataArray, x, y, 30, 25, Color8u(255, 0, 0));
 		node->insertAfter(sentinel->prev, node);
-		node->drawNode(textureSize, dataArray);
+		//You dont need to call draw here as it will get drawn later when the main draw method gets called
+		//node->drawNode(textureSize, dataArray);
 	}
 }
 
@@ -152,7 +156,7 @@ void RoyalSocietyv2App::update(){
 //my nodes. Go figure.
 void RoyalSocietyv2App::draw(){
 	gl::draw(*mySurface);
-	gl::color(Color(.7f, .1f, .8f));
+	gl::color(Color(1.0f, .1f, .8f));
 
 	//Render loop for those nasty nodes
 	Node* temp = sentinel->prev;
